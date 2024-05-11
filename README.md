@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Running the server
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+1. Open a terminal, navigate to the project's directory, and run the following command to install the needed packages:
+``` bash
+npm i
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Create a `.env` file in the project's root directory and fill in the data according to the `.env.example` file.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Run the server through:
+``` bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+> Server runs on [http://localhost:3000](http://localhost:3000)
 
-## Learn More
+<br/>
 
-To learn more about Next.js, take a look at the following resources:
+## API Endpoints
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| HTTP Method | Endpoint | Required fields | Optional fields | Action | Response |
+| :---------- | :------- | :-------------- | :-------------- | :----- | :------- |
+| GET    | /api/users | None | None | Get all Users | - `users` array |
+| GET    | /api/users/:userId | None | None | Get data of specific User | - `user` object |
+| POST   | /api/users | - username: string <br/> - password: string | None | Create a new User | - The created `user` object |
+| DELETE | /api/users/:userId | None | None | Delete specific User and all his Tasks | - 'User is successfully deleted.' message |
+| POST   | /api/users/:userId/tasks | - title: string <br/> - description: string | None | Create new Task for a specific User | - The created `task` object |
+| GET   | /api/users/:userId/tasks | None | None | Get All Tasks of specific User | - `tasks` array |
+| GET   | /api/users/:userId/tasks/:taskId | None | None | Get specific Task of specific User | - `task` object |
+| PATCH  | /api/users/:userId/tasks/:taskId | None | - title: string <br/> - description: string <br/> - status: boolean | Edit Task | - The updated `task` object |
+| DELETE | /api/users/:userId/tasks/:taskId | None | None | Remove Task from User's Tasks | - 'Task is successfully deleted.' message |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+<br/>
 
-## Deploy on Vercel
+## Returned objects format
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+``` js
+user = {
+    id,
+    username,
+    tasks: [
+        {
+            _id,
+            title,
+            description,
+            status,
+            createdAt,
+            updatedAt,
+        }
+    ],
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+``` js
+users = [
+    {
+        id,
+        username,
+        tasks: [
+            {
+                _id,
+                title,
+                description,
+                status,
+                createdAt,
+                updatedAt,
+            },
+            etc...
+        ],
+    },
+    etc...
+]
+```
+
+``` js
+task = {
+    _id,
+    title,
+    description,
+    status,
+    createdAt,
+    updatedAt,
+}
+```
+
+``` js
+tasks = [
+    {
+        _id,
+        title,
+        description,
+        status,
+        createdAt,
+        updatedAt,
+    },
+    etc...
+]
+```
